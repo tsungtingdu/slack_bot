@@ -1,5 +1,5 @@
 require 'http'
 require 'json'
 
-rc = JSON.post("https://slack.com/api/api.test")
+rc = HTTP.post("https://slack.com/api/api.test")
 puts JSON.pretty_generate(JSON.parse(rc.body))
