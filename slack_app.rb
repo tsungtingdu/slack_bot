@@ -9,16 +9,15 @@ Thread.new do
   end
 end
 
-get '/' do 
-  if params['code']
-    rc = HTTP.post("https://slack.com/api/oauth.access", params: { 
+get '/' do
+  if params.key?('code')
+    rc = JSON.parse(HTTP.post('https://slack.com/api/oauth.access', params: {
       client_id: ENV['SLACK_CLIENT_ID'],
       client_secret: ENV['SLACK_CLIENT_SECRET'],
-      code: params['code'] 
-    })
+      code: params['code']
+    }))
 
     token = rc['bot']['bot_access_token']
-
 
     rc = HTTP.post("https://slack.com/api/rtm.start", params: { 
       token: token, 
@@ -53,7 +52,7 @@ get '/' do
         EM.stop
       end  
     end
-
+    "Team Successfully Registered"
   else  
     "Hello World"
   end  
